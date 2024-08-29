@@ -6,7 +6,7 @@ type OSKeys = 'windowsUrl' | 'macosIntelUrl' | 'macosArmUrl';
 /**
  * 定义包含不同操作系统下载链接的选项类型
  */
-type DownloadOptions = Record<OSKeys, string>;
+type DownloadOptions = Partial<Record<OSKeys, string>>;
 
 /**
  * 根据用户操作系统返回对应的下载链接
@@ -19,15 +19,20 @@ export function getDownloadUrl(options: DownloadOptions): string {
   // 根据检测结果选择合适的下载链接
   switch (osKey) {
     case 'windows':
-      return options['windowsUrl'];
+      if (options.windowsUrl) return options.windowsUrl;
+      break;
     case 'macosIntel':
-      return options['macosIntelUrl'];
+      if (options.macosIntelUrl) return options.macosIntelUrl;
+      break;
     case 'macosArm':
-      return options['macosArmUrl'];
+      if (options.macosArmUrl) return options.macosArmUrl;
+      break;
     default:
-      // 如果未识别到支持的操作系统，抛出错误
       throw new Error('不支持的操作系统或架构');
   }
+
+  // 如果没有提供合适的 URL，则抛出错误
+  throw new Error('未提供适用于检测到的操作系统的下载链接');
 }
 
 /**
