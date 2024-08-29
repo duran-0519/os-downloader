@@ -13,20 +13,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org/'
+      - name: Install Bun
+        run: curl -fsSL https://bun.sh/install | bash
+
+      - name: Setup Bun
+        run: echo "::add-path::$HOME/.bun/bin"
 
       - name: Install dependencies
-        run: npm install
+        run: bun install
 
       - name: Run tests
-        run: npm test
+        run: bun run test
 
       - name: Build project
-        run: npm run build:prod
+        run: bun run build:prod
 
       - name: Publish to npm
         run: npm publish
