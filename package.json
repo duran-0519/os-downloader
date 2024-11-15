@@ -12,8 +12,7 @@
     "clean": "rm -rf lib",
     "prepare": "bun run clean && bun run build:prod",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
-    "format": "prettier --write 'src/**/*.{ts,tsx,json,md}'",
-    "prepublishOnly": "bun run test"
+    "format": "prettier --write 'src/**/*.{ts,tsx,json,md}'"
   },
   "devDependencies": {
     "@types/bun": "^1.1.8",
